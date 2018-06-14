@@ -1,81 +1,148 @@
+import sqlite3
+conn = sqlite3.connect("Project.db")
+c =conn.cursor()
+c.execute("CREATE TABLE IF NOT EXISTS stuff(Serial TEXT,Amount TEXT,Name TEXT,Address TEXT,Email TEXT,Email TEXT,Contact TEXT,Aadhar TEXT)")
 
+#.....................................................................................
 from tkinter import*
 from tkinter import messagebox 
 
 
-window = Tk()
-window.geometry("400x400+0+0")
-window.title("Project")
-Tops = Frame(window,bg="white",width = 800,height=50,relief=RAISED)
-Tops.pack(side=TOP)
+win = Tk()
+solditem = Tk()
+solditem.geometry("500x400+400+0")
+F1 = Frame(solditem, width = 500,height = 300)
+F1.pack(side= TOP)
+F2 = Frame(solditem, width = 500,height = 100)
+F2.pack(side= BOTTOM)
 
-f1 = Frame(window,width = 400,height=450,relief=SUNKEN)
-f1.pack(side=LEFT)
 
-f2 = Frame(window,width = 400,height=450,relief=SUNKEN)
-f2.pack(side=RIGHT)
+win.title('warning')
+win.geometry("400x800+0+0")
 
-lblinfo = Label(Tops, font=( 'aria' ,30, 'bold' ),text="Anti Theft System",fg="dark red",bd=10,anchor='w')
-lblinfo.grid(row=0,column=0)
-#.............................................................................................................
-var1 = IntVar()
-var2 = IntVar()
-var3 = IntVar()
-var4 = IntVar()
-var5 = IntVar()
-var6 = IntVar()
-var7 = IntVar()
-var8 = IntVar()
-var9 = IntVar()
 
+
+
+endoftheday = Tk()
+endoftheday.title("this is the final sheet")
+endoftheday.geometry("500x500+900+0")
+
+#.......................................................................................
+
+def endofday():
+    Label(endoftheday,text = "list of all sold items",anchor = E).pack()
+#.......................................................................................
+
+def insertdata(E1,E2,E3,E4,E5,E6,E7):
+    c.execute("INSERT INTO stuff (Serial,Amount,Name,Address,Email,Email,Contact,Aadhar) VALUES(?,?,?,?,?,?,?)",(E1,E2,E3,E4,E5,E6,E7))
+    print("executed")
+
+
+
+
+
+
+
+
+
+#.......................................................................................
+E1 = StringVar()
+E2 = StringVar()
+E3 = StringVar()
+E4 = StringVar()
+E5 = StringVar()
+E6 = StringVar()
+E7 = StringVar()
+
+
+def sold(A):
+    solditem.title("Sold sheet for"+ A)
  
-def type_():
-    if var1.get() is 1:
-        messagebox.showwarning("Title", "A has been picked up ")
-        
-    if var2.get() is 1:
-        messagebox.showinfo("Title", "B has been picked up ")
-    if var3.get() is 1:
-        messagebox.showinfo("Title", "C has been picked up ")
-    if var4.get() is 1:
-        messagebox.showinfo("Title", "D has been picked up ")
-    if var5.get() is 1:
-        messagebox.showinfo("Title", "E has been picked up ")
-    if var6.get() is 1:
-        messagebox.showinfo("Title", "F has been picked up ")
-    if var7.get() is 1:
-        messagebox.showinfo("Title", "G has been picked up ")
-    if var8.get() is 1:
-        messagebox.showinfo("Title", "H has been picked up ")
-    if var9.get() is 1:
-        messagebox.showinfo("Title", "I has been picked up ")
+    Label(F1, text ="Serial NO:",anchor = E).grid(row = 0 ,column = 0)
+    Entry(F1, textvariable = E1).grid(row = 0 ,column = 2, sticky = N)
+    Label(F1 , text ="Total Amount:",anchor = E).grid(row = 1 ,column = 0)
+    Entry(F1,textvariable = E2).grid(row = 1 ,column = 2)
+    
+    Label(F1, text ="Name:",anchor = E).grid(row = 4 ,column = 0)
+    Entry(F1,textvariable = E3).grid(row = 4 ,column = 2,sticky = N)
+    Label(F1,text = "Address:",anchor = E).grid(row = 5 ,column = 0)
+    Entry(F1,textvariable = E4).grid(row = 5 ,column = 2)
+    Label(F1, text ="Email:",anchor = E).grid(row = 6 ,column = 0)
+    Entry(F1,textvariable = E5).grid(row = 6 ,column = 2)
+    Label(F1, text ="Cntact No:",anchor = E).grid(row = 7 ,column = 0)
+    Entry(F1,textvariable = E6).grid(row = 7 ,column = 2)
+    Label(F1, text ="Aadhar Card No:",anchor = E).grid(row = 8 ,column = 0)
+    Entry(F1,textvariable = E7).grid(row = 8 ,column = 2)
+
+
+    e1 = E1.get()
+    e2 = E2.get()
+    e3 = E3.get()
+    e4 = E4.get()
+    e5 = E5.get()
+    e6 = E6.get()
+    e7 = E7.get()
+
+
+    Button (F2,text = "Paid",command= lambda: insertdata(e1,e2,e3,e4,e5,e6,e7)).pack(side= TOP)
+    Button (F2,text = "Cancel",command= passvalue(A)).pack(side= TOP)
 
 
 
-A1 = Radiobutton(f1, font=( 'aria' ,16, ),text="A", variable=var1, value=1,command= type_,anchor = E)
-A1.grid(row = 1,column= 1,sticky=W)
-
-A2 = Radiobutton(f1, font=( 'aria' ,16, ),text="B", variable=var2, value=1,command= type_,anchor = E)
-A2.grid(row = 1,column= 2,sticky=W)
-
-A3 = Radiobutton(f1, font=( 'aria' ,16, ),text="C", variable=var3, value=1,command= type_,anchor = E)
-A3.grid(row = 1,column= 3,sticky=W)
-
-A4 = Radiobutton(f1, font=( 'aria' ,16, ),text="D", variable=var4, value=1,command= type_,anchor = E)
-A4.grid(row = 2,column= 1,sticky=W)
 
 
-A5 = Radiobutton(f1, font=( 'aria' ,16, ),text="E", variable=var5, value=1,command= type_,anchor = E)
-A5.grid(row = 2,column= 2,sticky=W)
 
-A6 = Radiobutton(f1, font=( 'aria' ,16, ),text="F", variable=var6, value=1,command= type_,anchor = E)
-A6.grid(row = 2,column= 3,sticky=W)
 
-A7 = Radiobutton(f1, font=( 'aria' ,16, ),text="G", variable=var7, value=1,command= type_,anchor = E)
-A7.grid(row = 3,column= 1,sticky=W)
 
-A8 = Radiobutton(f1, font=( 'aria' ,16, ),text="H", variable=var8, value=1,command= type_,anchor = E)
-A8.grid(row = 3,column= 2,sticky=W)
 
-A9 = Radiobutton(f1, font=( 'aria' ,16, ),text="I", variable=var9, value=1,command= type_,anchor = E)
-A9.grid(row = 3,column= 3,sticky=W)
+
+    
+
+C1 = Button(win, text="End of the day",command=lambda:endofday(),anchor = E)
+C1.pack(side = BOTTOM)
+    
+
+
+
+
+#.........................................................................................
+def passvalue(a):
+
+    if a is not 0:
+        print(a)
+    else:
+        win.destroy()
+#..........................................................................................
+def messageWindow(A):
+
+    
+    
+    message = A +" has been picked up for a long time"
+    Label(win, text=message).pack()
+    B1 = Button(win, text='Ignore',command=lambda:passvalue(A),anchor = E)
+    B1.pack()
+    B2 = Button(win, text='Sold',command=lambda:sold(A),anchor = E)
+    B2.pack()
+    B3 = Button(win, text='Alerted',command=lambda:passvalue(A),anchor = E)
+    B3.pack()
+    Scrollbar(win, orient = "vertical")
+
+    exit
+
+B4 = Button(win, text = 'end',command = lambda:passvalue(A),anchor = E)
+B4.pack(side = BOTTOM)
+#.......................................................................................
+B = "ON"
+while B is "ON":
+ 
+        A = input("enter the item which has been picked up:")
+        messageWindow(A)
+
+
+win.mainloop()
+
+
+
+
+
+
